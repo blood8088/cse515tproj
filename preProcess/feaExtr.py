@@ -1,4 +1,4 @@
-import feaParser,re,csv,numpy
+import feaParser,re,csv,numpy,util
 from scipy.sparse import csr_matrix
 from util import save_data_to_npz
 
@@ -7,7 +7,7 @@ row=[]
 col=[]
 
 
-feaFp = open('..\\..\\rawData\\Gg_13_8_99.taxonomy\\gg_13_8_99_sorted.fasta')
+feaFp = open(util.rawDataPath+'gg_13_8_99_sorted.fasta')
 flag = 0
 
 seqPat = re.compile(r'[AaCcGgTt]+')
@@ -25,7 +25,6 @@ for line in feaFp:
         row.extend(numpy.full(ind.shape,i))
         data.extend(fea[ind])
         i+=1
-        print(i)
         
     flag = (flag+1)%2
 
@@ -34,4 +33,4 @@ row = numpy.array(row,dtype=numpy.int32)
 col = numpy.array(col,dtype=numpy.uint16)
 data = numpy.array(data,dtype=numpy.float32)
 
-save_data_to_npz("features", csr_matrix((data, (row, col))))
+save_data_to_npz(util.dataPath+"features", csr_matrix((data, (row, col))))

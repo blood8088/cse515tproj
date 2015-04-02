@@ -13,7 +13,9 @@ class RPStrHash:
     def __init__(self,seq):
         self.strLen = 8
         self.hVal = 0
+        self.oVal = 0
         self.modVal = 4**7
+        self.maxVal = 4**8-1
         if len(seq)>=8:
             self.sHash(seq[0:8])
 	
@@ -21,16 +23,18 @@ class RPStrHash:
         return self.cDict[char]
 
     def delLeft(self):
-        self.hVal = self.hVal%self.modVal
+        self.oVal = self.oVal%self.modVal
 
     def addRight(self,char):
         if len(char)==1:
-            self.hVal = self.hVal*4+self.cHash(char)
+            self.oVal = self.oVal*4+self.cHash(char)
+            self.hVal = min(self.oVal,self.maxVal-self.oVal)
             return self.hVal
 
     def sHash(self,seq):
         if len(seq)==self.strLen:
             for c in seq:
-                self.hVal = self.hVal*4+self.cHash(c)
+                self.oVal = self.oVal*4+self.cHash(c)
+            self.hVal = min(self.oVal,self.maxVal-self.oVal)
 
             

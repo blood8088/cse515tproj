@@ -3,7 +3,7 @@ import rpStrHash
 class FeaParser:
 	
     def __init__(self):
-        self.feaLen = 4**8
+        self.feaLen = int((4**8)/2)
         self.fea =[]
 
     def parse(self,seq,idn=None):
