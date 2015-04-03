@@ -1,6 +1,6 @@
 import feaParser,re,csv,numpy,util
 from scipy.sparse import csr_matrix
-from util import save_data_to_npz
+from util import save_feature_to_npz
 
 data=[]
 row=[]
@@ -33,4 +33,4 @@ row = numpy.array(row,dtype=numpy.int32)
 col = numpy.array(col,dtype=numpy.uint16)
 data = numpy.array(data,dtype=numpy.float32)
 
-save_data_to_npz(util.dataPath+"features", csr_matrix((data, (row, col))))
+save_feature_to_npz(util.dataPath+"features", csr_matrix((data, (row, col))))
