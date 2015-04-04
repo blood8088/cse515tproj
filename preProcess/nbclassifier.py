@@ -10,17 +10,18 @@ class NaiveBayesianClassifier:
         
         
     def predict(self,xTe):
-        from numpy import array
+        from numpy import array,float64
         nPr = xTe.shape[0]
         yPr = [""]*xTe.shape[0]
+        print('{}{}'.format("Number of classes: ",len(self.likelihood)))
         for i in range(nPr):
             x = xTe.getrow(i)
             maxVal = 0
             maxIndex = 0
             for j in range(len(self.likelihood)):
-                posterior = 1.0
+                posterior = float64(1.0)
                 for pvg in self.likelihood[j][x.indices]:
-                    posterior*=pvg
+                    posterior*=float64(pvg)
                 if posterior>maxVal:
                     maxVal = posterior
                     maxIndex = j
@@ -28,9 +29,10 @@ class NaiveBayesianClassifier:
         return array(yPr)
         
     def accuracy(self,yTe,yPr):
+        from numpy import float64
         if yTe.shape[0]==yPr.shape[0]:
             count = 0.0
             for i in range(yTe.shape[0]):
                 if yTe[i] == yPr[i]:
                     count+=1.0
-            return count/yTe.shape[0]
+            return float64(count)/yTe.shape[0]
