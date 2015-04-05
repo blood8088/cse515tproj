@@ -2,6 +2,7 @@ import util,numpy,scipy
 from util import load_feature_from_npz,load_label_from_npz
 from labelParser import LabelParser
 import nbclassifier,slicer
+import multiprocessing as mp
 
 maxIter = 1
 
@@ -19,7 +20,7 @@ for j in range(maxIter):
     print("Begin cutting data into training dataset and testing dataset...\n")
     xTr,yTr,xTe,yTe = slr.slice(features,labels)
     print("Cutting finished.\n")
-    for i in range(LabelParser.maxTax):
+    for i in range(2):
         print('{}{}'.format(i,"th taxonomy classification:\n"))
         print("Starting Training...\n")
         nbc = nbclassifier.NaiveBayesianClassifier(xTr,yTr[:,i])

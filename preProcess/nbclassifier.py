@@ -25,7 +25,10 @@ class NaiveBayesianClassifier:
                 if posterior>maxVal:
                     maxVal = posterior
                     maxIndex = j
-            yPr[i]=self.labelset[maxIndex]
+            if maxVal>=0.8:
+                yPr[i]=self.labelset[maxIndex]
+            else:
+                yPr[i]=""
         return array(yPr)
         
     def accuracy(self,yTe,yPr):
