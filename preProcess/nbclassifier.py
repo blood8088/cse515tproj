@@ -34,8 +34,12 @@ class NaiveBayesianClassifier:
     def accuracy(self,yTe,yPr):
         from numpy import float64
         if yTe.shape[0]==yPr.shape[0]:
-            count = 0.0
+            matchCount = 0.0
+			totalCount = 0.0
             for i in range(yTe.shape[0]):
                 if yTe[i] == yPr[i]:
-                    count+=1.0
-            return float64(count)/yTe.shape[0]
+                    matchCount+=1.0
+					totalCount+=1.0
+				else if yPr[i]!="":
+					totalCount+=1.0
+            return float64(matchCount)/totalCount
