@@ -10,7 +10,7 @@ class RandomSlicer:
     
     def slice(self,feature,label):
         from numpy.random import choice
-        if label.shape[0] != self.upper:
+        if len(label) != self.upper:
             self.updateUpper(len(label))
         total = range(self.upper)
         test = choice(self.upper,self.testnum,replace=False)

@@ -41,7 +41,7 @@ def nbclassify(iteration=1,lessData=False,test=False):
         print("Training finished.")
         print("Starting Testing...")
         prediction = nbc.predict(xTe)
-        print(prediction)
+	print(prediction)
         for j in range(len(prediction)):
             yPr[j,i] = prediction[j]
         print("Testing finished.")
