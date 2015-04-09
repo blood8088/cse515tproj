@@ -3,7 +3,7 @@ from util import load_feature_from_npz,load_label_from_npz
 from labelParser import LabelParser
 import nbclassifier,slicer
 
-def nbclassify(iteration=1,lessData=False,test=True):
+def nbclassify(iteration=1,lessData=False,test=False):
     print("Loading features and labels...")
     features = load_feature_from_npz(util.dataPath+'features.npz')
     labels = load_label_from_npz(util.dataPath+'labels.npz')
@@ -49,7 +49,7 @@ def nbclassify(iteration=1,lessData=False,test=True):
     print(accDict)    
     numpy.savez(util.dataPath+"accuracy",accuracy = accDict)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import sys
     if len(sys.argv)<2:
         nbclassify()

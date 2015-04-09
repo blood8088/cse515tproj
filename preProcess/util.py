@@ -1,7 +1,7 @@
 __author__ = 'Sui Jiang'
 
-rawDataPath = "..\\..\\rawData\\Gg_13_8_99.taxonomy\\"
-dataPath = "..\\..\\data\\"
+rawDataPath = '../../rawData/Gg_13_8_99.taxonomy/'
+dataPath = '../../data/'
 
 
 def save_feature_to_npz(file_name, x):
