@@ -1,6 +1,8 @@
 import sys
-sys.path.append('/home/jglab/ypeng/software/anaconda3/lib/python3.4/')
 from platform import system
+if system()=='Linux':
+    sys.path.append('/home/jglab/ypeng/software/anaconda3/lib/python3.4/')
+
 import util,numpy
 from util import load_feature_from_npz,load_label_from_npz
 from labelParser import LabelParser
@@ -8,6 +10,7 @@ import classifier,slicer
 
 def nbclassify(iteration=1,lessData=False,test=False):
     print("Loading features and labels...")
+    print('Data Path is: ' + util.dataPath(system())+ '.')
     features = load_feature_from_npz(util.dataPath(system())+'features.npz')
     labels = load_label_from_npz(util.dataPath(system())+'labels.npz')
     print("Loading finished.")
