@@ -34,7 +34,7 @@ def load_training_testing(iteration=1):
     yTe = te_data['yTe'] 
     return xTr,yTr,xTe,yTe   
 
-def nbclassify(iteration=1,lessData=False,test=False):
+def nbclassify(iteration=1,test=False):
 
     if test:
         maxIter=1
@@ -69,6 +69,43 @@ def nbclassify(iteration=1,lessData=False,test=False):
     print(acc)    
     numpy.savez('{}{}'.format(util.dataPath(system())+'nbcresult_',iteration),accuracy = acc,yPr = yPr)
 
+def lrclassify(iteration=1,test=False):
+     
+    from sklearn.linear_model import LogisticRegression as LR
+
+    if test:
+        maxIter=1
+    else:
+        maxIter=LabelParser.maxTax
+
+    acc = numpy.zeros(LabelParser.maxTax)
+    yPr = []
+
+    print('Loading data...')
+    xTr,yTr,xTe,yTe = load_training_testing(iteration)   
+ 
+    print("Starting classification...")
+    lrc = LR()
+    for i in range(maxIter):
+        print('{}{}'.format(i,"th taxonomy classification:"))
+        print("Starting Training...")
+        lrc.fit(xTr,yTr[:,i])
+        print("Training finished.")
+        print("Starting Testing...")
+        prediction = lrc.predict(xTe)
+        yPr.append(prediction)
+        print("Testing finished.")
+        print("Starting calculating accuracy...")
+        acc[i] += lrc.score(xTe,yTe[:,i],prediction)
+        print('{}{}{}'.format("Accuracy is ",acc[i],'.'))
+
+    yPr = numpy.array(yPr)
+    yPr = yPr.transpose()
+
+    print(acc)    
+    numpy.savez('{}{}'.format(util.dataPath(system())+'lrcresult_',iteration),accuracy = acc,yPr = yPr)
+
+
 if __name__ == '__main__':
     import sys
     if len(sys.argv)<2:
@@ -80,16 +117,23 @@ if __name__ == '__main__':
             training_testing_split(int(sys.argv[2]))
         else:
             raise Exception('Error!Too many arguments!')
-    elif sys.argv[1]=='classify':
+    elif sys.argv[1]=='nbclassify':
         if len(sys.argv)<3:
             nbclassify()
         elif len(sys.argv)==3:
             nbclassify(iteration=int(sys.argv[2]))
         elif len(sys.argv)==4:
-            nbclassify(iteration=int(sys.argv[2]),lessData = (sys.argv[3]=='lessData'))
-        elif len(sys.argv)==5:
-            nbclassify(iteration=int(sys.argv[2]),lessData = (sys.argv[3]=='lessData'),test = (sys.argv[4]=='test'))
+            nbclassify(iteration=int(sys.argv[2]),test = (sys.argv[3]=='test'))
+        else:
+            raise Exception('Error!Too many arguments!')
+    elif sys.argv[1]=='lrclassify':
+        if len(sys.argv)<3:
+            lrclassify()
+        elif len(sys.argv)==3:
+            lrclassify(iteration=int(sys.argv[2]))
+        elif len(sys.argv)==4:
+            lrclassify(iteration=int(sys.argv[2]),test = (sys.argv[3]=='test'))
         else:
             raise Exception('Error!Too many arguments!')
     else:
-        raise Exception('Wrong arguments!Try classify or split!')
+        raise Exception('Wrong arguments!Try nbclassify, lrclassify or split!')

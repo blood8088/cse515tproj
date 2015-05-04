@@ -1,7 +1,18 @@
 __author__ = 'Sui Jiang'
 
-rawDataPath = '../../rawData/Gg_13_8_99.taxonomy/'
-dataPath = '../../data/'
+def rawDataPath(system):
+    rawDataPath = 'rawData/Gg_13_8_99.taxonomy/'
+    if system == 'Linux':
+        rawDataPath = '/home/jglab/ypeng/projects/Qiezi_16s/' + rawDataPath
+    else: rawDataPath = '../../' + rawDataPath
+    return rawDataPath
+
+def dataPath(system):
+    dataPath = 'data/'
+    if system == 'Linux':
+        dataPath = '/home/jglab/ypeng/projects/Qiezi_16s/' + dataPath
+    else: dataPath = '../../' + dataPath
+    return dataPath
 
 
 def save_feature_to_npz(file_name, x):
